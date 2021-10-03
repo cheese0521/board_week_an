@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <div class="text-end">
+            {% if user in con.up.all %}
+                <a href="{% url 'board:up' con.id 'down'%}">
+                    <button class="btn btn-danger">DOWN</button>
+                </a>
+            {% else %}
+                <a href="{% url 'board:up' con.id 'up'%}">
+                    <button class="btn btn-primary">UP</button>
+                </a>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Subject</label>
+            <input type="text" disabled value="{{ con.subject }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Writer</label>
+            <input type="text" disabled value="{{ con.writer }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Contents</label>
+            <textarea disabled class="form-control">{{ con.content }}</textarea>
+        </div>
+        <div class="text-end mt-3">
+            {% if user.username == con.writer %}
+                <a href="{% url 'board:update' con.id %}"><button class="btn btn-primary">edit</button></a>
+                <a href="{% url 'board:delete' con.id %}"><button class="btn btn-danger">delete</button></a>
+            {% endif %}
+        </div>
+        <div class="text-start"><a href="{% url 'board:index' %}"><button class="btn btn-primary">to list</button></a></div>
+
+        <hr>
+
+        {% for i in rep %}
+            <div class="row mb-3" height="150px">
+                <div class="col-lg-3 text-center">
+                    <img src="{{ i.replyer_pic.url}}" class="rounded-circle col" height="150px" width="150px">
+                </div>
+                <div class="col-lg-9">
+                    <span style="font-weight: bold; font-size: 30px;">{{i.replyer}}</span>
+                    <span style="float: right;">
+                    {% if user in i.agree.all %}
+                        <a href="{% url 'board:rep_up' con.id i.id 'down'%}"><button class="btn btn-danger">down</button></a>
+                    {% else %}
+                        <a href="{% url 'board:rep_up' con.id i.id 'up'%}"><button class="btn btn-primary">up</button></a>
+                    {% endif %}
+                    </span>
+                    <textarea class="form-control" disabled>{{i.comment}}</textarea>
+                    {{ i.agree.all.count }}
+                </div>
+        {% endfor %}
+
+        <form method="POST" action="{% url 'board:create_reply' con.id %}">
+        {% csrf_token %}
+            <div class="row text-center">
+                <div class="col-lg-10">
+                    <textarea name="comment" class="form-control"></textarea>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-primary">add reply</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

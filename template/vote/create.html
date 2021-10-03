@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1>Create Topic</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Topic Title</label>
+            <input name="title" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Writer</label>
+            <input disabled value="{{user.username}}" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Comment</label>
+            <textarea name="comment" class="form-control"></textarea>
+        </div>
+
+        <div id="here"></div>
+
+        <div class="text-start"><button type="button" onclick="create()" class="btn btn-primary">+</button></div>
+
+        <hr>
+
+        <div class="text-end"><button type="submit" class="btn btn-primary">Submit</button></div>
+    </form>
+</div>
+
+<script>
+    function create()
+    {
+        div = document.getElementById("here")
+        p = document.createElement("p")
+        p.innerHTML = '<div class="mb-3 mt-4"><label for="exampleInputEmail1" class="form-label">보기이름</label><input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></div> <div class="mb-5 mt-4"><label for="exampleInputEmail1" class="form-label">보기사진</label><input type="file" name="pic" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></div><hr>'
+        div.appendChild(p)
+    }
+</script>
+{% endblock %}

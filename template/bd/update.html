@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1> Edit Post</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Subject</label>
+            <input name="subject" value="{{con.subject}}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Writer</label>
+            <input disabled value="{{con.writer}}" type="text" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Content</label>
+            <textarea name="content" class="form-control">{{con.content}}</textarea>
+        </div>
+        <div class="text-end"><button type="submit" class="btn btn-primary">Submit</button></div>
+    </form>
+</div>
+{% endblock %}

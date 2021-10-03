@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Translator</h1>
+
+    <hr>
+    <form method="POST">
+        <div class="row">
+            {% csrf_token %}
+            <div class="col-lg-5">
+                <h3>Before</h3>
+                <textarea name="input" placeholder="Input" class="form-control" style="height: 300px; resize: none;font-size: 30px;">{{ in }}</textarea>
+            </div>
+            <div class="col-lg-2 text-center">
+                <p>
+                    From
+                    <select name="from">
+                        <option value="ko" {%if from == 'ko'%}selected{%endif%} >ko</option>
+                        <option value="en" {%if from == 'en'%}selected{%endif%} >en</option>
+                    </select>
+                </p>
+                <p>
+                    To
+                    <select name='to'>
+                        <option value="en" {%if to == 'en'%}selected{%endif%} >en</option>
+                        <option value="ko" {%if to == 'ko'%}selected{%endif%} >ko</option>
+                    </select>
+                </p>
+                <p><button class="btn btn-primary">Translate</button></p>
+            </div>
+            <div class="col-lg-5">
+                <h3>After</h3>
+                <textarea disabled placeholder="Output" class="form-control" style="height: 300px; resize: none;font-size: 30px;">{{ out }}</textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
